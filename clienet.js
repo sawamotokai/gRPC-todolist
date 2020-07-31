@@ -4,10 +4,11 @@ const packageDef = protoLoader.loadSync("todo.proto", {});
 const {todoPackage} = grpc.loadPackageDefinition(packageDef);
  
 const client = new todoPackage.Todo("localhost:40000", grpc.credentials.createInsecure());
+const task = process.argv[2];
  
 client.createTodo({
   id: -1,
-  text: "Laundry"
+  text: task,
 }, (err, res) => {
   console.log("Received from server " + JSON.stringify(res));
 });
