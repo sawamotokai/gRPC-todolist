@@ -12,7 +12,13 @@ client.createTodo({
   console.log("Received from server " + JSON.stringify(res));
 });
 
-client.readTodos({}, (err, res) => {
-  // console.log("Received from server " + JSON.stringify(res));
-  res.items.forEach(i => {console.log(i.text)});
-});
+// Simple read
+// client.readTodos({}, (err, res) => {
+//   // console.log("Received from server " + JSON.stringify(res));
+//   res.items.forEach(i => {console.log(i.text)});
+// });
+
+// stream read
+const call = client.readTodosStream();
+call.on("data", item => {console.log(JSON.stringify(item));});
+call.on("end", e => {console.log("Stream ✅");});
